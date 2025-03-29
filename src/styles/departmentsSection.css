@@ -1,0 +1,82 @@
+/* Departments Section Styling */
+.departments-section {
+    padding: 50px 20px;
+    background-color: #e9f7f7;
+    text-align: center;
+}
+
+.departments-section .section-heading {
+    font-size: 36px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.departments-section .departments-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /* Adjusted for smaller cards */
+    gap: 20px;
+    /* Reduced gap for a more compact layout */
+    padding: 0 10px;
+}
+
+.departments-section .department-card {
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    /* Slightly smaller border radius for a more compact look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.departments-section .department-card:hover {
+    transform: translateY(-8px);
+    /* Slight lift on hover */
+}
+
+.departments-section .department-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 160px;
+    /* Smaller image height */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.departments-section .department-image {
+    width: 60%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
+}
+
+.department-card:hover .department-image {
+    transform: scale(1.1);
+    /* Slight zoom effect on hover */
+}
+
+.department-info {
+    padding: 15px;
+    /* Reduced padding for a more compact card */
+}
+
+.department-name {
+    font-size: 20px;
+    /* Smaller font size for department name */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.department-description {
+    font-size: 14px;
+    /* Smaller description text */
+    color: #666;
+    line-height: 1.4;
+}

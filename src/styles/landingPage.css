@@ -1,0 +1,42 @@
+.carousel-item img {
+    object-fit: cover;
+    height: 800px; /* Set height of the images */
+    filter: brightness(70%); /* Slightly darken the images */
+}
+
+.carousel-caption {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    text-align: center;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-caption h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+
+/* Add transition for smooth caption appearance */
+.carousel-item {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Optional: Remove carousel control dots */
+.carousel-indicators {
+    display: none;
+}
+
+/* Optional: Add subtle shadow on hover */
+.carousel-item:hover img {
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+}
