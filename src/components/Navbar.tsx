@@ -23,9 +23,9 @@ export const Navbar = () => {
                         <li><NavLink to="/department/cardiology" end>Cardiology</NavLink></li>
                         <li><NavLink to="/department/psychology" end>Psychology</NavLink></li>
                         <li><NavLink to="/department/dental" end>Dental Care</NavLink></li>
-                        <li><NavLink to="/department/ENT" end>ENT</NavLink></li>
+                        <li><NavLink to="/department/ent" end>ENT</NavLink></li>
                         <li><NavLink to="/department/dermatology" end>Dermatology</NavLink></li>
-                        <li><NavLink to="/department/generalMedicine" end>General Medicine</NavLink></li>
+                        <li><NavLink to="/department/general medicine" end>General Medicine</NavLink></li>
                         <li><NavLink to="/department/neurology" end>Neurology</NavLink></li>
                         <li><NavLink to="/department/gynaecology" end>Gynaecology</NavLink></li>
                         <li><NavLink to="/department/urology" end>Urology</NavLink></li>

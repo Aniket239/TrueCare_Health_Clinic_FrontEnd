@@ -1,51 +1,18 @@
 /* Footer Section */
 .footer {
-    background-color: #1f1f1f;
-    /* Darker background for modern feel */
+    background: linear-gradient(135deg, #212121, #111);
+    /* Darker gradient */
     color: #fff;
-    padding: 60px 20px 0 20px;
+    padding: 50px 0 0px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-}
-.footer-company-details{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-.footer-icon-container{
-    width: 150px;
-    height: 150px;
-    margin-bottom: 20px;
-    border-radius: 500px;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.footer-logo {
-    width: 140px;
-    height: 80px;
-    border-radius: 500px;
-    object-fit: contain;
-}
-
-/* Footer Logo Section */
-.footer-company-details h2 {
-    font-size: 36px;
-    color: #72e8d2;
-    /* Green color */
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.footer-company-details p {
-    font-size: 16px;
-    color: #bbb;
-    font-style: italic;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    /* Deep shadow for more depth */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* Subtle top border */
 }
 
 /* Footer Content Layout */
@@ -53,47 +20,114 @@
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    max-width: 1200px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
     flex-wrap: wrap;
+}
+
+/* Company Details Section */
+.footer-company-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 50px 0 30px;
+    transition: transform 0.3s ease;
+}
+
+.footer-company-details:hover {
+    transform: translateY(-5px);
+    /* Subtle hover effect */
+}
+
+/* Logo Section */
+.footer-icon-container {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.footer-icon-container:hover {
+    transform: scale(1.1);
+    /* Slightly enlarge on hover */
+}
+
+.footer-logo {
+    width: 150px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Company Name & Slogan */
+.footer-company-details h2 {
+    font-size: 32px;
+    color: #73e7d2;
+    /* Vibrant orange for a pop of color */
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    /* Subtle shadow for text */
+}
+
+.footer-company-details p {
+    font-size: 18px;
+    color: #bbb;
+    font-style: italic;
 }
 
 /* Contact Information Section */
 .footer-contact,
-.footer-social {
+.footer-social,
+.footer-quick-links {
     margin: 20px;
-    max-width: 300px;
+    max-width: 280px;
     text-align: left;
+    flex: 1;
 }
 
 /* Header in Footer Sections */
 .footer-contact h3,
-.footer-social h3 {
-    font-size: 20px;
+.footer-social h3,
+.footer-quick-links h3 {
+    font-size: 24px;
     margin-bottom: 15px;
-    color: #fff;
-    font-weight: bold;
+    color: #73e7d2;
+    /* Vibrant orange for headings */
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* Footer Links & Contact Info */
 .footer-contact ul,
-.footer-social ul {
+.footer-social ul,
+.footer-quick-links ul {
     list-style: none;
     padding: 0;
 }
 
 .footer-contact li,
-.footer-social li {
+.footer-social li,
+.footer-quick-links li {
     font-size: 16px;
     margin-bottom: 12px;
     color: #bbb;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-contact li:hover,
-.footer-social li:hover {
-    color: #72e8d2;
+.footer-social li:hover,
+.footer-quick-links li:hover {
+    color: #73e7d2;
+    /* Hover effect with the pop color */
+    transform: translateX(5px);
+    /* Subtle hover movement */
 }
 
 /* Footer Social Links */
@@ -101,12 +135,13 @@
     color: #bbb;
     text-decoration: none;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-social a:hover {
-    color: #72e8d2;
+    color: #73e7d2;
+    /* Vibrant hover color */
     transform: translateX(5px);
 }
 
@@ -118,13 +153,26 @@
 .footer-bottom {
     background-color: #222;
     width: 100%;
-    padding: 15px 0;
+    padding: 10px 0;
+    margin-top: 20px;
 }
 
 .footer-bottom p {
     font-size: 14px;
     color: #bbb;
     margin: 0;
+}
+
+.footer-quick-links a {
+    color: #bbb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-quick-links a:hover {
+    color: #73e7d2;
+    transform: translateX(5px);
 }
 
 /* Responsive Design for smaller screens */
@@ -135,7 +183,8 @@
     }
 
     .footer-contact,
-    .footer-social {
+    .footer-social,
+    .footer-quick-links {
         margin: 20px 0;
         text-align: center;
     }

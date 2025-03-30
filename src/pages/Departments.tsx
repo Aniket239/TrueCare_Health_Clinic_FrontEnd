@@ -78,7 +78,7 @@ const Departments = () => {
                             <div className="departments-card-info">
                                 <h3>{departments.name}</h3>
                                 <p>{departments.description}</p>
-                                <NavLink to={`/department/departmentName=${departments.name.toLowerCase()}`} end>
+                                <NavLink to={`/department/${departments.name.toLowerCase()}`} end>
                                     Learn more
                                 </NavLink>
                             </div>

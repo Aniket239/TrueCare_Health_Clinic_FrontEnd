@@ -13,7 +13,7 @@ const AboutSection = () => {
                     />
                 </div>
                 <div className="about-text">
-                    <h2 className="about-heading">True Care Health Clinic</h2>
+                    <h2 className="about-heading">TrueCare Health Clinic</h2>
                     <p className="about-description">
                         At True Care Health Clinic, we are committed to providing high-quality healthcare with a
                         personalized approach. Our team of experienced doctors, nurses, and medical professionals

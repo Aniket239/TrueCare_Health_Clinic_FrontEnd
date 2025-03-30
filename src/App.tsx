@@ -8,6 +8,7 @@ import { Navbar } from './components/Navbar';
 import Footer from './components/Footer';
 import Departments from './pages/Departments';
 import Department from './pages/Department';
+import Doctor from './pages/Doctor';
 
 const App = () => {
   console.log('text ===============================');
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="register" element={<Register />} />
           <Route path="departments" element={<Departments />} />
           <Route path="department/:departmentName" element={<Department />} />
+          <Route path="doctor/:doctorId" element={<Doctor />} />
         </Routes>
       </div>
       <Footer />

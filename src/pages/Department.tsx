@@ -1,117 +1,72 @@
 import React from 'react'
-import { useParams } from "react-router";
+import { NavLink, useParams } from "react-router";
 import '../styles/department.css';  // Include corresponding styles
 
 const doctorsData = {
   cardiology: [
-    { name: "Dr. John Doe", specialization: "Cardiologist", image: "/images/doctor1.jpg" },
-    { name: "Dr. Jane Smith", specialization: "Cardiology Specialist", image: "/images/doctor2.jpg" },
-    { name: "Dr. Sarah Miller", specialization: "Heart Surgeon", image: "/images/doctor3.jpg" },
-    { name: "Dr. David Clark", specialization: "Cardiologist", image: "/images/doctor4.jpg" },
-    { name: "Dr. Anna Turner", specialization: "Cardiologist", image: "/images/doctor5.jpg" },
-    { name: "Dr. William Harris", specialization: "Electrophysiologist", image: "/images/doctor6.jpg" },
-    { name: "Dr. Sophia Lee", specialization: "Heart Disease Specialist", image: "/images/doctor7.jpg" },
-    { name: "Dr. Michael King", specialization: "Cardiology Specialist", image: "/images/doctor8.jpg" },
-    { name: "Dr. Olivia Taylor", specialization: "Cardiologist", image: "/images/doctor9.jpg" },
-    { name: "Dr. Daniel Moore", specialization: "Cardiac Rehabilitation", image: "/images/doctor10.jpg" }
+    { id: 1, name: "Dr. Subir Chatterjee", specialization: "Cardiologist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 2, name: "Dr. Priyanka Ghosh", specialization: "Cardiology Specialist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 3, name: "Dr. Arunava Banerjee", specialization: "Heart Surgeon", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 4, name: "Dr. Debasish Mukherjee", specialization: "Cardiologist", image: "https://img.freepik.com/free-photo/nurse-portrait-hospital_23-2150780268.jpg?t=st=1743323882~exp=1743327482~hmac=4c35284dc7755bacc88a447d8ca56014b29dd84f884e06056bf03fc55b1f8a35&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 5, name: "Dr. Sharmila Roy", specialization: "Cardiologist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
   ],
   psychology: [
-    { name: "Dr. Emily Brown", specialization: "Psychologist", image: "/images/doctor3.jpg" },
-    { name: "Dr. Robert White", specialization: "Psychiatrist", image: "/images/doctor4.jpg" },
-    { name: "Dr. Linda Walker", specialization: "Therapist", image: "/images/doctor11.jpg" },
-    { name: "Dr. William Scott", specialization: "Clinical Psychologist", image: "/images/doctor12.jpg" },
-    { name: "Dr. Jessica Green", specialization: "Child Psychologist", image: "/images/doctor13.jpg" },
-    { name: "Dr. James Taylor", specialization: "Psychiatrist", image: "/images/doctor14.jpg" },
-    { name: "Dr. Sarah Miller", specialization: "Counseling Psychologist", image: "/images/doctor15.jpg" },
-    { name: "Dr. Andrew Evans", specialization: "Neuropsychologist", image: "/images/doctor16.jpg" },
-    { name: "Dr. Nancy Hall", specialization: "Therapist", image: "/images/doctor17.jpg" },
-    { name: "Dr. George Lewis", specialization: "Psychologist", image: "/images/doctor18.jpg" }
+    { id: 6, name: "Dr. Rina Das", specialization: "Psychologist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 7, name: "Dr. Somnath Sen", specialization: "Psychiatrist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 8, name: "Dr. Swarnali Mitra", specialization: "Therapist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T09:00:00Z", endTime: "2025-03-30T11:00:00Z" },
+    { id: 9, name: "Dr. Kaushik Saha", specialization: "Clinical Psychologist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 10, name: "Dr. Madhusree Ghosh", specialization: "Child Psychologist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
   dental: [
-    { name: "Dr. Alice Green", specialization: "Dentist", image: "/images/doctor5.jpg" },
-    { name: "Dr. Michael Blue", specialization: "Orthodontist", image: "/images/doctor6.jpg" },
-    { name: "Dr. David Clark", specialization: "Dentist", image: "/images/doctor19.jpg" },
-    { name: "Dr. Sarah Adams", specialization: "Pediatric Dentist", image: "/images/doctor20.jpg" },
-    { name: "Dr. Sophia White", specialization: "Periodontist", image: "/images/doctor21.jpg" },
-    { name: "Dr. Andrew King", specialization: "Oral Surgeon", image: "/images/doctor22.jpg" },
-    { name: "Dr. Elizabeth Baker", specialization: "Cosmetic Dentist", image: "/images/doctor23.jpg" },
-    { name: "Dr. Jason Taylor", specialization: "Implant Specialist", image: "/images/doctor24.jpg" },
-    { name: "Dr. Maria Davis", specialization: "Dentist", image: "/images/doctor25.jpg" },
-    { name: "Dr. James Brown", specialization: "Orthodontist", image: "/images/doctor26.jpg" }
+    { id: 11, name: "Dr. Tanushree Choudhury", specialization: "Dentist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 12, name: "Dr. Rajib Dutta", specialization: "Orthodontist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 13, name: "Dr. Soumya Ghosh", specialization: "Dentist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 14, name: "Dr. Nilima Banerjee", specialization: "Pediatric Dentist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 15, name: "Dr. Moumita Ray", specialization: "Periodontist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
-  ENT: [
-    { name: "Dr. Thomas Johnson", specialization: "ENT Specialist", image: "/images/doctor27.jpg" },
-    { name: "Dr. Elizabeth Moore", specialization: "ENT Surgeon", image: "/images/doctor28.jpg" },
-    { name: "Dr. Michael Wilson", specialization: "ENT Consultant", image: "/images/doctor29.jpg" },
-    { name: "Dr. Sarah Davis", specialization: "Audiologist", image: "/images/doctor30.jpg" },
-    { name: "Dr. William Roberts", specialization: "ENT Specialist", image: "/images/doctor31.jpg" },
-    { name: "Dr. Lisa Lee", specialization: "ENT Surgeon", image: "/images/doctor32.jpg" },
-    { name: "Dr. James Harris", specialization: "ENT Specialist", image: "/images/doctor33.jpg" },
-    { name: "Dr. Linda Clark", specialization: "Pediatric ENT", image: "/images/doctor34.jpg" },
-    { name: "Dr. George Wright", specialization: "Otolaryngologist", image: "/images/doctor35.jpg" },
-    { name: "Dr. Nancy Lewis", specialization: "ENT Surgeon", image: "/images/doctor36.jpg" }
+  ent: [
+    { id: 16, name: "Dr. Anirban Roy", specialization: "ENT Specialist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 17, name: "Dr. Kalyani Das", specialization: "ENT Surgeon", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 18, name: "Dr. Arindam Saha", specialization: "ENT Consultant", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 19, name: "Dr. Sharmistha Ghosh", specialization: "Audiologist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 20, name: "Dr. Amitava Roy", specialization: "ENT Specialist", image: "https://img.freepik.com/free-photo/nurse-portrait-hospital_23-2150780268.jpg?t=st=1743323882~exp=1743327482~hmac=4c35284dc7755bacc88a447d8ca56014b29dd84f884e06056bf03fc55b1f8a35&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
   dermatology: [
-    { name: "Dr. Mark Smith", specialization: "Dermatologist", image: "/images/doctor37.jpg" },
-    { name: "Dr. Emily Williams", specialization: "Cosmetic Dermatologist", image: "/images/doctor38.jpg" },
-    { name: "Dr. Anna Taylor", specialization: "Dermatology Specialist", image: "/images/doctor39.jpg" },
-    { name: "Dr. Robert Johnson", specialization: "Dermatologist", image: "/images/doctor40.jpg" },
-    { name: "Dr. Olivia Brown", specialization: "Pediatric Dermatologist", image: "/images/doctor41.jpg" },
-    { name: "Dr. James Clark", specialization: "Dermatology Surgeon", image: "/images/doctor42.jpg" },
-    { name: "Dr. Rachel Adams", specialization: "Skin Specialist", image: "/images/doctor43.jpg" },
-    { name: "Dr. Michael White", specialization: "Cosmetic Dermatology", image: "/images/doctor44.jpg" },
-    { name: "Dr. Linda Green", specialization: "Dermatology Specialist", image: "/images/doctor45.jpg" },
-    { name: "Dr. Daniel Harris", specialization: "Dermatology Consultant", image: "/images/doctor46.jpg" }
+    { id: 21, name: "Dr. Shubhojit Mitra", specialization: "Dermatologist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 22, name: "Dr. Ananya Das", specialization: "Cosmetic Dermatologist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 23, name: "Dr. Rukmini Saha", specialization: "Dermatology Specialist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 24, name: "Dr. Suman Mukherjee", specialization: "Dermatologist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 25, name: "Dr. Priyanka Ghosh", specialization: "Pediatric Dermatologist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
-  generalMedicine: [
-    { name: "Dr. John Harris", specialization: "General Practitioner", image: "/images/doctor47.jpg" },
-    { name: "Dr. Sarah Lewis", specialization: "Family Medicine", image: "/images/doctor48.jpg" },
-    { name: "Dr. Daniel Scott", specialization: "Internal Medicine", image: "/images/doctor49.jpg" },
-    { name: "Dr. Jessica Taylor", specialization: "General Medicine", image: "/images/doctor50.jpg" },
-    { name: "Dr. Michael Johnson", specialization: "General Medicine", image: "/images/doctor51.jpg" },
-    { name: "Dr. Olivia Walker", specialization: "Internal Medicine", image: "/images/doctor52.jpg" },
-    { name: "Dr. Robert Anderson", specialization: "Family Medicine", image: "/images/doctor53.jpg" },
-    { name: "Dr. Linda White", specialization: "General Practitioner", image: "/images/doctor54.jpg" },
-    { name: "Dr. James Moore", specialization: "General Medicine", image: "/images/doctor55.jpg" },
-    { name: "Dr. Sophia Evans", specialization: "Internal Medicine", image: "/images/doctor56.jpg" }
+  "general medicine": [
+    { id: 26, name: "Dr. Bikash Chatterjee", specialization: "General Practitioner", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 27, name: "Dr. Ananya Basu", specialization: "Family Medicine", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 28, name: "Dr. Arindam Roy", specialization: "Internal Medicine", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 29, name: "Dr. Sushmita Saha", specialization: "General Medicine", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 30, name: "Dr. Partha Ghosh", specialization: "General Medicine", image: "https://img.freepik.com/free-photo/nurse-portrait-hospital_23-2150780268.jpg?t=st=1743323882~exp=1743327482~hmac=4c35284dc7755bacc88a447d8ca56014b29dd84f884e06056bf03fc55b1f8a35&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
   neurology: [
-    { name: "Dr. Richard Harris", specialization: "Neurologist", image: "/images/doctor57.jpg" },
-    { name: "Dr. Michael Adams", specialization: "Neurologist", image: "/images/doctor58.jpg" },
-    { name: "Dr. Sarah Williams", specialization: "Neuro Surgeon", image: "/images/doctor59.jpg" },
-    { name: "Dr. Olivia Brown", specialization: "Neurology Specialist", image: "/images/doctor60.jpg" },
-    { name: "Dr. Daniel King", specialization: "Neurophysiologist", image: "/images/doctor61.jpg" },
-    { name: "Dr. George Scott", specialization: "Neurologist", image: "/images/doctor62.jpg" },
-    { name: "Dr. Emily Lee", specialization: "Neurosurgeon", image: "/images/doctor63.jpg" },
-    { name: "Dr. David White", specialization: "Neuro-oncologist", image: "/images/doctor64.jpg" },
-    { name: "Dr. Sophia Harris", specialization: "Neurologist", image: "/images/doctor65.jpg" },
-    { name: "Dr. William Brown", specialization: "Neuropsychologist", image: "/images/doctor66.jpg" }
+    { id: 31, name: "Dr. Kaushik Sen", specialization: "Neurologist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 32, name: "Dr. Subhashis Banerjee", specialization: "Neurologist", image: "https://img.freepik.com/free-photo/nurse-portrait-hospital_23-2150780268.jpg?t=st=1743323882~exp=1743327482~hmac=4c35284dc7755bacc88a447d8ca56014b29dd84f884e06056bf03fc55b1f8a35&w=996", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 33, name: "Dr. Somnath Dey", specialization: "Neuro Surgeon", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T09:00:00Z", endTime: "2025-03-30T11:00:00Z" },
+    { id: 34, name: "Dr. Rituparna Ghosh", specialization: "Neurology Specialist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+    { id: 35, name: "Dr. Sayan Chatterjee", specialization: "Neurophysiologist", image: "https://img.freepik.com/free-photo/doctors-day-cute-young-handsome-man-lab-coat-glasses-writing-notebook_140725-162888.jpg?t=st=1743324113~exp=1743327713~hmac=d8c4cca5027b033b169df28956e3d6d560959a2c3c0351c8cc601e0438540e01&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
   gynaecology: [
-    { name: "Dr. Alice Johnson", specialization: "Obstetrician & Gynaecologist", image: "/images/doctor67.jpg" },
-    { name: "Dr. Emma Williams", specialization: "Obstetrician", image: "/images/doctor68.jpg" },
-    { name: "Dr. Sophia Brown", specialization: "Gynaecologist", image: "/images/doctor69.jpg" },
-    { name: "Dr. Olivia Taylor", specialization: "Obstetrician & Gynaecologist", image: "/images/doctor70.jpg" },
-    { name: "Dr. Maria Evans", specialization: "Gynaecologist", image: "/images/doctor71.jpg" },
-    { name: "Dr. Jessica Clark", specialization: "Reproductive Endocrinologist", image: "/images/doctor72.jpg" },
-    { name: "Dr. Hannah Adams", specialization: "Obstetrician", image: "/images/doctor73.jpg" },
-    { name: "Dr. Lisa White", specialization: "Maternal-Fetal Medicine Specialist", image: "/images/doctor74.jpg" },
-    { name: "Dr. Emily Harris", specialization: "Gynecology Surgeon", image: "/images/doctor75.jpg" },
-    { name: "Dr. Sarah Green", specialization: "Gynaecologist", image: "/images/doctor76.jpg" }
+    { id: 36, name: "Dr. Pradipta Ghosh", specialization: "Obstetrician & Gynaecologist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 37, name: "Dr. Subhra Banerjee", specialization: "Obstetrician", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 38, name: "Dr. Pritha Roy", specialization: "Gynaecologist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 39, name: "Dr. Surabhi Das", specialization: "Obstetrician & Gynaecologist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 40, name: "Dr. Mitali Saha", specialization: "Gynaecologist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
   ],
   urology: [
-    { name: "Dr. Thomas Miller", specialization: "Urologist", image: "/images/doctor77.jpg" },
-    { name: "Dr. Richard Lee", specialization: "Urologic Surgeon", image: "/images/doctor78.jpg" },
-    { name: "Dr. Elizabeth Harris", specialization: "Urologist", image: "/images/doctor79.jpg" },
-    { name: "Dr. Michael Taylor", specialization: "Urologist", image: "/images/doctor80.jpg" },
-    { name: "Dr. Andrew Green", specialization: "Urology Specialist", image: "/images/doctor81.jpg" },
-    { name: "Dr. Sophia Scott", specialization: "Pediatric Urologist", image: "/images/doctor82.jpg" },
-    { name: "Dr. Daniel Wilson", specialization: "Urology Surgeon", image: "/images/doctor83.jpg" },
-    { name: "Dr. Olivia Davis", specialization: "Female Urologist", image: "/images/doctor84.jpg" },
-    { name: "Dr. James Clark", specialization: "Urologist", image: "/images/doctor85.jpg" },
-    { name: "Dr. Sarah Adams", specialization: "Urology Consultant", image: "/images/doctor86.jpg" }
-  ]
-}
+    { id: 41, name: "Dr. Ranjan Banerjee", specialization: "Urologist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 42, name: "Dr. Partha Mukherjee", specialization: "Urologic Surgeon", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:30:00Z", endTime: "2025-03-30T10:30:00Z" },
+    { id: 43, name: "Dr. Manas Dey", specialization: "Urologist", image: "https://img.freepik.com/free-photo/nurse-portrait-hospital_23-2150780268.jpg?t=st=1743323882~exp=1743327482~hmac=4c35284dc7755bacc88a447d8ca56014b29dd84f884e06056bf03fc55b1f8a35&w=996", startTime: "2025-03-30T09:00:00Z", endTime: "2025-03-30T11:00:00Z" },
+    { id: 44, name: "Dr. Arka Saha", specialization: "Urologist", image: "https://img.freepik.com/free-photo/doctors-day-cute-young-handsome-man-lab-coat-glasses-writing-notebook_140725-162888.jpg?t=st=1743324113~exp=1743327713~hmac=d8c4cca5027b033b169df28956e3d6d560959a2c3c0351c8cc601e0438540e01&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
+    { id: 45, name: "Dr. Sudipta Sen", specialization: "Urologist", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
+  ],
+};
 
 
 const Department = () => {
@@ -128,23 +83,29 @@ const Department = () => {
   return (
     <div className="department-container">
       {/* Department Heading */}
-      <div className="department-heading">
-        <h1>{departmentName && departmentName?.charAt(0).toUpperCase() + departmentName.slice(1)}</h1>
-        <p>Meet our expert doctors for {departmentName}</p>
+      <div className="hero-section">
+        <div className="hero-text">
+          <h1>{departmentName && (departmentName === 'ent' ? departmentName?.toUpperCase() : departmentName?.charAt(0).toUpperCase() + departmentName.slice(1))}</h1>
+          <p>Your health is our priority. Explore our specialized department.</p>
+        </div>
       </div>
 
       {/* Doctor Cards */}
-      <div className="doctor-list">
-        {departmentDoctors.map((doctor, index) => (
-          <div key={index} className="doctor-card">
-            <div className="doctor-card-image">
-              <img src={doctor.image} alt={doctor.name} />
+      <div className="department-doctor-list">
+        {departmentDoctors.map((doctor: any, index: number) => (
+          // <NavLink className="link" to={`doctor/${doctor.id}`} end>
+          <NavLink className="link" to={`/doctor/${doctor.id}`} end>
+            <div key={index} className="department-doctor-card">
+              <div className="department-doctor-card-image">
+                <img src={doctor.image} alt={doctor.name} />
+              </div>
+              <div className="department-doctor-card-info">
+                <h3>{doctor.name}</h3>
+                <p className='doctor-specialization'>{doctor.specialization}</p>
+                <p className='doctor-timings'>{new Date(doctor.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase()} - {new Date(doctor.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase()}</p>
+              </div>
             </div>
-            <div className="doctor-card-info">
-              <h3>{doctor.name}</h3>
-              <p>{doctor.specialization}</p>
-            </div>
-          </div>
+          </NavLink>
         ))}
       </div>
     </div>

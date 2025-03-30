@@ -1,7 +1,6 @@
 /* General Styles */
 .department-container {
     font-family: Arial, sans-serif;
-    padding: 40px;
 }
 
 .department-heading {
@@ -20,13 +19,21 @@
 }
 
 /* Doctor Cards Section */
-.doctor-list {
+.department-doctor-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+    gap: 30px;
+    padding: 30px;
+}
+.link{
+    color: #333;
+    text-decoration: none;
 }
 
-.doctor-card {
+.link:hover{
+    color: #333;
+}
+.department-doctor-card {
     display: flex;
     align-items: center;
     padding: 20px;
@@ -36,11 +43,11 @@
     transition: transform 0.3s ease;
 }
 
-.doctor-card:hover {
+.department-doctor-card:hover {
     transform: scale(1.05);
 }
 
-.doctor-card-image img {
+.department-doctor-card-image img {
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -48,16 +55,22 @@
     margin-right: 20px;
 }
 
-.doctor-card-info {
+.department-doctor-card-info {
     flex-grow: 1;
 }
 
-.doctor-card-info h3 {
+.department-doctor-card-info h3 {
     font-size: 1.5em;
     margin: 0;
 }
 
-.doctor-card-info p {
+.department-doctor-card-info .doctor-specialization {
     font-size: 1.1em;
     margin: 10px 0;
+}
+
+.doctor-timings {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 10px;
 }

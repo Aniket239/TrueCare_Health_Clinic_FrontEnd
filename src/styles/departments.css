@@ -6,7 +6,7 @@
 /* Hero Section */
 .hero-section {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0)), url('../assets/departmentsBackground.jpg') center/cover no-repeat;
-    padding: 80px 100px;
+    padding: 50px 65px;
     text-align: left;
     color: white;
 }
@@ -58,7 +58,7 @@
     transition: transform 0.3s ease;
 }
 .departments-card:hover .departments-card-image img{
-    transform: scale(1.15);
+    transform: scale(1.05);
     /* Slight zoom effect on hover */
 }
 
