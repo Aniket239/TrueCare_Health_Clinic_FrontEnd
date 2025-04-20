@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/register.css';
 import { api } from '../utils/api';
+import { useNavigate } from 'react-router';
 
 const Register = () => {
     const [maxDate, setMaxDate] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         // Set the max date as today's date (in yyyy-mm-dd format)
         const today = new Date();
@@ -16,27 +17,41 @@ const Register = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
+        const dobTimestamp = new Date(data.dob).getTime() / 1000; // in seconds
 
         console.log('Form Data:', data);
         try {
-            const registerResponse = await api.post('/user', {
+            const registerResponse = await api.post('/register', {
                 "firstname": data.firstname,
                 "lastname": data.lastname,
                 "email": data.email,
                 "phoneNumber": data.phone,
                 "password": data.password,
                 "gender": data.gender,
-                "dob": data.dob,
+                "dob": dobTimestamp,
             });
             console.log('====================================');
             console.log(registerResponse);
             console.log('====================================');
+
+            if (registerResponse.status === 200) {
+                // Registration successful, navigate to home
+                navigate('/');
+            }
+            
             // const apicheck = await api.get('/health');
             // console.log('====================================');
             // console.log(apicheck);
             // console.log('====================================');
         } catch (error) {
             console.error(error);
+            if (error.response && error.response.status === 400) {
+                navigate('/login');
+                alert('Email already registered. Please log in.');
+            } else {
+                console.error('Unexpected error:', error);
+                alert('Something went wrong. Please try again later.');
+            }
         }
     };
 
