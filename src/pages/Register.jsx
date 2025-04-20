@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/register.css';
+import { api } from '../utils/api';
 
 const Register = () => {
     const [maxDate, setMaxDate] = useState('');
@@ -11,10 +12,32 @@ const Register = () => {
         setMaxDate(formattedDate);
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add your form submission logic here
-        console.log('Form submitted');
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        console.log('Form Data:', data);
+        try {
+            const registerResponse = await api.post('/user', {
+                "firstname": data.firstname,
+                "lastname": data.lastname,
+                "email": data.email,
+                "phoneNumber": data.phone,
+                "password": data.password,
+                "gender": data.gender,
+                "dob": data.dob,
+            });
+            console.log('====================================');
+            console.log(registerResponse);
+            console.log('====================================');
+            // const apicheck = await api.get('/health');
+            // console.log('====================================');
+            // console.log(apicheck);
+            // console.log('====================================');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -25,50 +48,50 @@ const Register = () => {
                     <div className="user-details">
                         <div className="input-box">
                             <span className="details">First Name</span>
-                            <input type="text" placeholder="Enter your first name" required />
+                            <input type="text" name="firstname" placeholder="Enter your first name" required />
                         </div>
                         <div className="input-box">
                             <span className="details">Last Name</span>
-                            <input type="text" placeholder="Enter your last name" required />
+                            <input type="text" name='lastname' placeholder="Enter your last name" required />
                         </div>
                         <div className="input-box">
                             <span className="details">Email</span>
-                            <input type="email" placeholder="Enter your email" required />
+                            <input type="email" name='email' placeholder="Enter your email" required />
                         </div>
                         <div className="input-box">
                             <span className="details">Phone Number</span>
-                            <input type="tel" placeholder="Enter your phone number" required />
+                            <input type="tel" name='phone' placeholder="Enter your phone number" required />
                         </div>
                         <div className="input-box">
                             <span className="details">Password</span>
-                            <input type="password" placeholder="Enter your password" required />
+                            <input type="password" name='password' placeholder="Enter your password" required />
                         </div>
                         <div className="input-box">
                             <span className="details">Confirm Password</span>
-                            <input type="password" placeholder="Confirm your password" required />
+                            <input type="password" name='confirmPassword' placeholder="Confirm your password" required />
                         </div>
 
                         <div className="gender-details">
                             <span className="gender-title">Gender</span>
                             <div className="category">
                                 <label>
-                                    <input type="radio" name="gender" required />
+                                    <input type="radio" name="gender" value="male" required />
                                     <span className="dot"></span> <p className='genderText'>Male</p>
                                 </label>
                                 <label>
-                                    <input type="radio" name="gender" required />
+                                    <input type="radio" name="gender" value="female" required />
                                     <span className="dot"></span> <p className='genderText'>Female</p>
                                 </label>
                                 <label>
-                                    <input type="radio" name="gender" required />
+                                    <input type="radio" name="gender" value="other" required />
                                     <span className="dot"></span> <p className='genderText'>Other</p>
                                 </label>
                             </div>
                         </div>
 
                         <div className="age-container">
-                            <label>Age</label>
-                            <input type="date" max={maxDate} required />
+                            <label>Date Of Birth</label>
+                            <input type="date" name='dob' max={maxDate} required />
                         </div>
                     </div>
 
