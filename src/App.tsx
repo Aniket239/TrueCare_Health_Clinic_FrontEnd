@@ -9,25 +9,29 @@ import Footer from './components/Footer';
 import Departments from './pages/Departments';
 import Department from './pages/Department';
 import Doctor from './pages/Doctor';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const App = () => {
   console.log('text ===============================');
 
   return (
-    <div className='root'>
-      <Navbar />
-      <div className='bodyContainer'>
-        <Routes>
-          <Route index element={<LandingPage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="departments" element={<Departments />} />
-          <Route path="department/:departmentName" element={<Department />} />
-          <Route path="doctor/:doctorId" element={<Doctor />} />
-        </Routes>
+    <Provider store={store}>
+      <div className='root'>
+        <Navbar />
+        <div className='bodyContainer'>
+          <Routes>
+            <Route index element={<LandingPage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="departments" element={<Departments />} />
+            <Route path="department/:departmentName" element={<Department />} />
+            <Route path="doctor/:doctorId" element={<Doctor />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Provider>
   )
 }
 

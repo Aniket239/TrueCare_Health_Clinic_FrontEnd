@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import '../styles/navbar.css';
 import { NavLink } from 'react-router';
+import { useSelector } from 'react-redux';
 
 export const Navbar = () => {
+    const loggedIn = useSelector((state: any) => state.auth.loggedIn);
+    console.log(loggedIn)
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -36,9 +39,14 @@ export const Navbar = () => {
             </ul>
 
             <div className="nav-right">
-                <div className="profile">
-                    <NavLink to={'/login'} end>Login</NavLink>
-                </div>
+                {loggedIn ?
+                    <NavLink to={'/account'} end><img className='accountIcon' src='src\assets\account.png' /></NavLink>
+                    :
+                    <div className="profile">
+                        <NavLink to={'/login'} end>Login</NavLink>
+                    </div>
+                }
+
                 <button className="appointment-btn">Make an Appointment</button>
             </div>
 

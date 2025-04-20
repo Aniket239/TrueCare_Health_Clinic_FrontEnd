@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '../styles/register.css';
 import { api } from '../utils/api';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../redux/slices/authSlice';
 
 const Register = () => {
     const [maxDate, setMaxDate] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         // Set the max date as today's date (in yyyy-mm-dd format)
         const today = new Date();
@@ -36,6 +39,7 @@ const Register = () => {
 
             if (registerResponse.status === 200) {
                 // Registration successful, navigate to home
+                dispatch(setLogin(true));
                 navigate('/');
             }
             

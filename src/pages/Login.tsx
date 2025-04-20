@@ -2,8 +2,10 @@ import React from 'react';
 import '../styles/login.css'
 import { NavLink, useNavigate } from 'react-router';
 import { api } from '../utils/api';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../redux/slices/authSlice';
 const Login = () => {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,12 +17,13 @@ const Login = () => {
                 email: data.email,
                 password: data.password,
             });
-        
+
             console.log(loginResponse.data); // Handle successful response
             alert('Login succcessful')
+            dispatch(setLogin(true));
             navigate('/');
         } catch (error) {
-            if(error.status === 404){
+            if (error.status === 404) {
                 alert('User not found. Please log in');
                 navigate('/register');
             }
@@ -29,7 +32,7 @@ const Login = () => {
                 alert('Something went wrong. Please try again later.');
             }
         }
-        
+
         // Add your login submission logic here
         console.log('Form submitted');
     };

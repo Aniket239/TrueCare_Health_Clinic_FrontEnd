@@ -85,9 +85,9 @@ nav {
 
 /* Profile Section */
 .nav-right {
-    display: flex;
+    /* display: flex; */
     align-items: center;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .profile {
@@ -113,8 +113,15 @@ nav {
     font-size: 20px;
 }
 
+.accountIcon {
+    width: 10%;
+    height: auto;
+    object-fit: contain;
+}
+
 /* Appointment Button */
 .appointment-btn {
+    margin-left: 5%;
     background-color: #007bff;
     color: white;
     border: none;
