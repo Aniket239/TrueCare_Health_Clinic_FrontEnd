@@ -1,6 +1,6 @@
 .carousel-item img {
     object-fit: cover;
-    height: 800px; /* Set height of the images */
+    height: 85vh; /* Set height of the images */
     filter: brightness(70%); /* Slightly darken the images */
 }
 
