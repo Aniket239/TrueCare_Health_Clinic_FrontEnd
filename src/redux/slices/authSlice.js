@@ -9,8 +9,9 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         setLogin: (state, action) => {
-            state.loggedIn = action.payload;
-            localStorage.setItem('loggedIn', JSON.stringify(action.payload));
+            state.loggedIn = true;
+            // localStorage.setItem('loggedIn', JSON.stringify(action.payload));
+            sessionStorage.setItem('token', action.payload);
         },
     }    
 })

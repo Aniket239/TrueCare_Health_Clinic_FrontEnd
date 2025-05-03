@@ -39,7 +39,8 @@ const Register = () => {
 
             if (registerResponse.status === 200) {
                 // Registration successful, navigate to home
-                dispatch(setLogin(true));
+                console.log(registerResponse.data)
+                dispatch(setLogin(registerResponse.data));
                 navigate('/');
             }
             
@@ -53,7 +54,7 @@ const Register = () => {
                 navigate('/login');
                 alert('Email already registered. Please log in.');
             } else {
-                console.error('Unexpected error:', error);
+                console.error('Unexpected error:', error.response);
                 alert('Something went wrong. Please try again later.');
             }
         }

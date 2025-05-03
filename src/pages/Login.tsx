@@ -11,7 +11,7 @@ const Login = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
-        console.log(data);
+        // console.log(data);
         try {
             const loginResponse = await api.post('login', {
                 email: data.email,
@@ -20,7 +20,7 @@ const Login = () => {
 
             console.log(loginResponse.data); // Handle successful response
             alert('Login succcessful')
-            dispatch(setLogin(true));
+            dispatch(setLogin(loginResponse.data));
             navigate('/');
         } catch (error) {
             if (error.status === 404) {
