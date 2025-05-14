@@ -4,6 +4,7 @@ import { api } from '../utils/api';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../redux/slices/authSlice';
+import { setJwtToken } from '../helpers/setJwtToken';
 
 const Register = () => {
     const [maxDate, setMaxDate] = useState('');
@@ -21,41 +22,49 @@ const Register = () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
         const dobTimestamp = new Date(data.dob).getTime() / 1000; // in seconds
+        if (data.password !== data.confirmPassword) {
+            alert('Password and confirm password does not match');
+        }
+        else {
+            console.log('Form Data:', data);
+            try {
+                const registerResponse = await api.post('/register', {
+                    "firstname": data.firstname,
+                    "lastname": data.lastname,
+                    "email": data.email,
+                    "phoneNumber": data.phone,
+                    "password": data.password,
+                    "gender": data.gender,
+                    "dob": dobTimestamp,
+                });
+                console.log('====================================');
+                console.log(registerResponse);
+                console.log('====================================');
 
-        console.log('Form Data:', data);
-        try {
-            const registerResponse = await api.post('/register', {
-                "firstname": data.firstname,
-                "lastname": data.lastname,
-                "email": data.email,
-                "phoneNumber": data.phone,
-                "password": data.password,
-                "gender": data.gender,
-                "dob": dobTimestamp,
-            });
-            console.log('====================================');
-            console.log(registerResponse);
-            console.log('====================================');
+                if (registerResponse.status === 200) {
+                    // Registration successful, navigate to home
+                    console.log(registerResponse?.data);
+                    console.log('====================================');
+                    console.log(registerResponse?.data?.token);
+                    console.log('====================================');
+                    dispatch(setLogin(true));
+                    setJwtToken(registerResponse?.data?.token);
+                    navigate('/');
+                }
 
-            if (registerResponse.status === 200) {
-                // Registration successful, navigate to home
-                console.log(registerResponse.data)
-                dispatch(setLogin(registerResponse.data));
-                navigate('/');
-            }
-            
-            // const apicheck = await api.get('/health');
-            // console.log('====================================');
-            // console.log(apicheck);
-            // console.log('====================================');
-        } catch (error) {
-            console.error(error);
-            if (error.response && error.response.status === 400) {
-                navigate('/login');
-                alert('Email already registered. Please log in.');
-            } else {
-                console.error('Unexpected error:', error.response);
-                alert('Something went wrong. Please try again later.');
+                // const apicheck = await api.get('/health');
+                // console.log('====================================');
+                // console.log(apicheck);
+                // console.log('====================================');
+            } catch (error) {
+                console.error(error);
+                if (error.response && error.response.status === 400) {
+                    navigate('/login');
+                    alert('Email already registered. Please log in.');
+                } else {
+                    console.error('Unexpected error:', error.response);
+                    alert('Something went wrong. Please try again later.');
+                }
             }
         }
     };

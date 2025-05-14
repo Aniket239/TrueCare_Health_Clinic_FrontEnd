@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/navbar.css';
 import { NavLink } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { api } from '../utils/api';
+import { setLogin } from '../redux/slices/authSlice';
+import { setJwtToken } from '../helpers/setJwtToken';
 
 export const Navbar = () => {
     const loggedIn = useSelector((state: any) => state.auth.loggedIn);
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const dispatch = useDispatch();
     useEffect(() => {
         getUser();
     }, [])
 
-    const getUser = () =>{
+    const getUser = async () => {
         try {
-            const userResponse = api.get('user');
+            const userResponse = await api.get('user');
             console.log('====================================');
             console.log(userResponse);
             console.log('====================================');
+            dispatch(setLogin(true));
         } catch (error) {
-            
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+            dispatch(setLogin(false));
+            setJwtToken('');
         }
     }
-    
+
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);

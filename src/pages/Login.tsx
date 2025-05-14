@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { api } from '../utils/api';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../redux/slices/authSlice';
+import { setJwtToken } from '../helpers/setJwtToken';
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,14 +19,15 @@ const Login = () => {
                 password: data.password,
             });
 
-            console.log(loginResponse.data); // Handle successful response
+            console.log(loginResponse?.data); // Handle successful response
             alert('Login succcessful')
-            dispatch(setLogin(loginResponse.data));
+            dispatch(setLogin(true));
+            setJwtToken(loginResponse?.data?.token);
             navigate('/');
         } catch (error) {
-            if (error.status === 404) {
-                alert('User not found. Please log in');
-                navigate('/register');
+            if (error.status === 401) {
+                alert('Invalid username or password');
+                // navigate('/register');
             }
             else {
                 console.error('Unexpected error:', error);
