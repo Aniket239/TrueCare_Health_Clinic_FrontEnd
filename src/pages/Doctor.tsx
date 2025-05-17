@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/doctor.css';  // Ensure you have a corresponding CSS file for styling
+import { useParams } from 'react-router';
+import { api } from '../utils/api';
 
 const Doctor = () => {
+    const { doctorId } = useParams();
+    const [doctor, setDoctor] = useState<any>(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -11,6 +15,24 @@ const Doctor = () => {
     });
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+
+    useEffect(() => {
+        getDoctor();
+    }, [])
+
+    const getDoctor = async () =>{
+        try {
+            const doctorResponse = await api.get(`doctor/${doctorId}`);
+            console.log('====================================');
+            console.log(doctorResponse?.data);
+            console.log('====================================');
+            setDoctor(doctorResponse?.data?.data);
+        } catch (error) {
+            console.error(error.response);
+            
+        }
+    }
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,29 +55,21 @@ const Doctor = () => {
             <header className="doctor-header">
                 <div className="doctor-image-container">
                     <img
-                        src="doctor-image.jpg"  // Replace with actual doctor image URL
+                        src={doctor?.profile_image}  // Replace with actual doctor image URL
                         alt="Doctor"
                         className="doctor-image"
                     />
                 </div>
                 <div className="doctor-info">
-                    <h1>Dr. John Doe</h1>
+                    <h1>{doctor?.name}</h1>
                     <p className="department">Department of Cardiology</p>
-                    <p className="specialization">Specializing in Heart Disease Prevention</p>
                 </div>
             </header>
 
             {/* About Section */}
             <section className="doctor-about-section">
-                <h2>About Dr. John Doe</h2>
-                <p>
-                    Dr. John Doe is a renowned cardiologist with over 15 years of experience.
-                    He specializes in heart disease prevention, diagnosis, and treatment. He has
-                    been working with patients of all ages and has helped countless individuals
-                    improve their cardiovascular health. His compassionate approach to care makes
-                    him highly sought after in the field of cardiology. Dr. Doe is a firm believer
-                    in educating patients and involving them in their health decisions.
-                </p>
+                <h2>About {doctor?.name}</h2>
+                <p>{doctor?.about}</p>
             </section>
 
             {/* Doctor Credentials Section */}
@@ -63,27 +77,10 @@ const Doctor = () => {
                 <h2>Credentials & Qualifications</h2>
                 <div className="credentials-container">
                     <div className="credential-card">
-                        <h3>Board Certified Cardiologist</h3>
-                        <p>Member of American Heart Association</p>
+                        <h3>Certified in {doctor?.department?.name}</h3>
                     </div>
                     <div className="credential-card">
-                        <h3>15+ Years Experience</h3>
-                        <p>Specializing in Heart Disease Diagnosis & Treatment</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Testimonials Section */}
-            <section className="testimonials-section">
-                <h2>Patient Testimonials</h2>
-                <div className="testimonial-container">
-                    <div className="testimonial-card">
-                        <p>"Dr. John Doe saved my life. His care and attention were incredible during my heart surgery. Highly recommend him!"</p>
-                        <footer>- Jane Doe</footer>
-                    </div>
-                    <div className="testimonial-card">
-                        <p>"I have been seeing Dr. Doe for over five years, and I always leave feeling more informed and confident about my health."</p>
-                        <footer>- Mark Smith</footer>
+                        <h3>{doctor?.experience}+ Years Experience</h3>
                     </div>
                 </div>
             </section>

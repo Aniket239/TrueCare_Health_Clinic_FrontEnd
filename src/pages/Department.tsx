@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from "react-router";
 import '../styles/department.css';  // Include corresponding styles
 import { api } from '../utils/api';
+import { convertToAmPm } from '../helpers/convertTime';
 
 const doctorsData = {
   cardiology: [
@@ -72,6 +73,7 @@ const doctorsData = {
 
 const Department = () => {
   const [department, setDepartment] = useState<any>(null);
+  const [doctors, setDoctors] = useState<any>(null);
   const { departmentSlug } = useParams();
   console.log('====================================');
   console.log(departmentSlug);
@@ -91,43 +93,61 @@ const Department = () => {
       console.log(departmentsData?.data);
       setDepartment(departmentsData?.data?.data);
       console.log('====================================');
+      getDoctors(departmentsData?.data?.data?.departmentId)
     } catch (error) {
       console.error(error.response);
     }
   }
 
-  // if (!department) {
-  //   return <div>Department not found!</div>;
-  // }
+  const getDoctors = async (departmentId: Number) => {
+    try {
+      const doctorsResponse = await api.get(`doctors/departmentId?departmentId=${departmentId}`);
+      console.log('====================================');
+      console.log(doctorsResponse?.data);
+      console.log('====================================');
+      setDoctors(doctorsResponse?.data?.data);
+    } catch (error) {
+      console.error(error?.response);
+      if (error?.status === 404) {
+        setDoctors(null)
+      }
+    }
+  }
 
   return (
     <div className="department-container">
       {/* Department Heading */}
       <div className="hero-section">
         <div className="hero-text">
-          <h1>{departmentSlug && (departmentSlug === 'ent' ? departmentSlug?.toUpperCase() : departmentSlug?.charAt(0).toUpperCase() + departmentSlug.slice(1))}</h1>
+          <h1>{department?.name && (department?.name === 'ent' ? department?.name?.toUpperCase() : department?.name?.charAt(0).toUpperCase() + department?.name.slice(1))}</h1>
           <p>{department?.description}</p>
         </div>
       </div>
 
       {/* Doctor Cards */}
-      {/* <div className="department-doctor-list">
-        {departmentDoctors.map((doctor: any, index: number) => (
-          // <NavLink className="link" to={`doctor/${doctor.id}`} end>
-          <NavLink className="link" to={`/doctor/${doctor.id}`} key={index} end>
-            <div key={index} className="department-doctor-card">
-              <div className="department-doctor-card-image">
-                <img src={doctor.image} alt={doctor.name} />
+      {doctors ?
+        <div className="department-doctor-list">
+          {doctors.map((doctor: any, index: number) => (
+            // <NavLink className="link" to={`doctor/${doctor.id}`} end>
+            <NavLink className="link" to={`/doctor/${doctor?.doctor_id}`} key={index} end>
+              <div key={index} className="department-doctor-card">
+                <div className="department-doctor-card-image">
+                  <img src={doctor?.profile_image} alt={doctor?.name} />
+                </div>
+                <div className="department-doctor-card-info">
+                  <h3>{doctor?.name}</h3>
+                  <p className='doctor-specialization'>{doctor?.department?.name}</p>
+                  <p className='doctor-timings'>{convertToAmPm(doctor?.start_time)} - {convertToAmPm(doctor?.end_time)}</p>
+                </div>
               </div>
-              <div className="department-doctor-card-info">
-                <h3>{doctor.name}</h3>
-                <p className='doctor-specialization'>{doctor.specialization}</p>
-                <p className='doctor-timings'>{new Date(doctor.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase()} - {new Date(doctor.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase()}</p>
-              </div>
-            </div>
-          </NavLink>
-        ))}
-      </div> */}
+            </NavLink>
+          ))}
+        </div>
+        :
+        <div className="department-doctor-card-info">
+          <h3>No doctors available for this department</h3>
+        </div>
+      }
     </div>
   );
 };
