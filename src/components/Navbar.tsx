@@ -9,10 +9,24 @@ import { setJwtToken } from '../helpers/setJwtToken';
 export const Navbar = () => {
     const loggedIn = useSelector((state: any) => state.auth.loggedIn);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [departments, setDepartments] = useState<any>(null); 
     const dispatch = useDispatch();
     useEffect(() => {
+        getDepartments();
         getUser();
     }, [])
+
+    const getDepartments = async () =>{
+        try {
+            const departmentsData = await api.get('departments');
+            console.log('====================================');
+            console.log(departmentsData?.data);
+            console.log('====================================');
+            setDepartments(departmentsData?.data?.data)
+        } catch (error) {
+            console.error(error.response);
+        }
+    }
 
     const getUser = async () => {
         try {
@@ -52,15 +66,11 @@ export const Navbar = () => {
                                 Departments <i className="fa-solid fa-chevron-down"></i>
                             </NavLink>
                             <ul className="dropdown-menu">
-                                <li><NavLink to="/department/cardiology" end>Cardiology</NavLink></li>
-                                <li><NavLink to="/department/psychology" end>Psychology</NavLink></li>
-                                <li><NavLink to="/department/dental" end>Dental Care</NavLink></li>
-                                <li><NavLink to="/department/ent" end>ENT</NavLink></li>
-                                <li><NavLink to="/department/dermatology" end>Dermatology</NavLink></li>
-                                <li><NavLink to="/department/general medicine" end>General Medicine</NavLink></li>
-                                <li><NavLink to="/department/neurology" end>Neurology</NavLink></li>
-                                <li><NavLink to="/department/gynaecology" end>Gynaecology</NavLink></li>
-                                <li><NavLink to="/department/urology" end>Urology</NavLink></li>
+                                {departments && departments.map((department:any)=>{
+                                    return(
+                                        <li><NavLink to={`/department/${department?.slug}`}>{department?.name}</NavLink></li>
+                                    )
+                                })}
                             </ul>
                         </li>
                         <li><NavLink to="/" end>Doctors</NavLink></li>

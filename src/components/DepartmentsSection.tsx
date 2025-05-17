@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/departmentsSection.css'; // Import the external CSS file
 import { NavLink } from 'react-router';
+import { api } from '../utils/api';
 
 // Sample departments data (10 departments)
 const departmentsData = [
@@ -51,25 +52,42 @@ const departmentsData = [
     },
 ];
 
-
 const DepartmentsSection = () => {
+    const [departments, setDepartments] = useState<any>(null);
+    useEffect(() => {
+        getDepartments();
+    }, [])
+    
+    const getDepartments = async () => {
+        try {
+            const departmentsData = await api.get('departments');
+            console.log('====================================');
+            console.log(departmentsData?.data);
+            setDepartments(departmentsData?.data?.data);
+            console.log('====================================');
+        } catch (error) {
+            console.error(error.response);
+        }
+    
+    }
+    
     return (
         <section className="departments-section">
             <h2 className="section-heading">Our Departments</h2>
             <div className="departments-grid">
-                {departmentsData.map((department, index) => (
+                {departments && departments.map((department, index) => (
                     <div className="department-card" key={index}>
-                        <NavLink className="department-card-link" to={`department/${department.name.toLowerCase()}`} end>
+                        <NavLink className="department-card-link" to={`department/${department?.slug}`} end>
                             <div className="department-image-wrapper">
                                 <img
-                                    src={department.image}
-                                    alt={department.name}
+                                    src={department?.departmentPicture}
+                                    alt={department?.name}
                                     className="department-image"
                                 />
                             </div>
                             <div className="department-info">
-                                <h3 className="department-name">{department.name}</h3>
-                                <p className="department-description">{department.description}</p>
+                                <h3 className="department-name">{department?.name}</h3>
+                                <p className="department-description">{department?.description}</p>
                             </div>
                         </NavLink>
                     </div>

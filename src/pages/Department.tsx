@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from "react-router";
 import '../styles/department.css';  // Include corresponding styles
+import { api } from '../utils/api';
 
 const doctorsData = {
   cardiology: [
@@ -17,7 +18,7 @@ const doctorsData = {
     { id: 9, name: "Dr. Kaushik Saha", specialization: "Clinical Psychologist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
     { id: 10, name: "Dr. Madhusree Ghosh", specialization: "Child Psychologist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
-  dental: [
+  "dental-care": [
     { id: 11, name: "Dr. Tanushree Choudhury", specialization: "Dentist", image: "https://img.freepik.com/free-photo/front-view-smiley-doctor-holding-notebook_23-2149726915.jpg?t=st=1743323969~exp=1743327569~hmac=2395b1613c4d7d252fce5460acb619d5f02496b2f51f54510978212d8d477117&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
     { id: 12, name: "Dr. Rajib Dutta", specialization: "Orthodontist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
     { id: 13, name: "Dr. Soumya Ghosh", specialization: "Dentist", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
@@ -38,7 +39,7 @@ const doctorsData = {
     { id: 24, name: "Dr. Suman Mukherjee", specialization: "Dermatologist", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
     { id: 25, name: "Dr. Priyanka Ghosh", specialization: "Pediatric Dermatologist", image: "https://img.freepik.com/free-photo/expressive-young-woman-posing-studio_176474-66965.jpg?t=st=1743324058~exp=1743327658~hmac=663697a562eb38b958258f55b6526e2713cb51632efa3aeb90e1b104779a2e69&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
   ],
-  "general medicine": [
+  "general-medicine": [
     { id: 26, name: "Dr. Bikash Chatterjee", specialization: "General Practitioner", image: "https://img.freepik.com/free-photo/portrait-mature-therapist-sitting-table-looking-camera_1098-18156.jpg?t=st=1743323763~exp=1743327363~hmac=e47991f9fe3e99ccb17971fd26e891ba0cf3b5848798b4e1024a614d4e57a23e&w=996", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
     { id: 27, name: "Dr. Ananya Basu", specialization: "Family Medicine", image: "https://img.freepik.com/free-photo/young-woman-doctor-with-stethoscope-hospital_1303-20691.jpg?t=st=1743323521~exp=1743327121~hmac=fe12fe1610ccd0fbdbab4afc791b538f3c5c1f3103edf11c596af29b28e84aed&w=996", startTime: "2025-03-30T10:00:00Z", endTime: "2025-03-30T12:00:00Z" },
     { id: 28, name: "Dr. Arindam Roy", specialization: "Internal Medicine", image: "https://img.freepik.com/free-photo/young-doctor-getting-ready-work_23-2149393691.jpg?t=st=1743323416~exp=1743327016~hmac=b8a64c75745537e8affc31409fef66db77246641c7ebc250e263a373cd3fde1c&w=740", startTime: "2025-03-30T08:00:00Z", endTime: "2025-03-30T10:00:00Z" },
@@ -70,31 +71,50 @@ const doctorsData = {
 
 
 const Department = () => {
-  const { departmentName } = useParams();
+  const [department, setDepartment] = useState<any>(null);
+  const { departmentSlug } = useParams();
+  console.log('====================================');
+  console.log(departmentSlug);
+  console.log('====================================');
   let departmentDoctors
-  if (departmentName) {
-    departmentDoctors = doctorsData[departmentName];
+  useEffect(() => {
+    if (departmentSlug) {
+      departmentDoctors = doctorsData[departmentSlug];
+      getDepartments();
+    }
+  }, [departmentSlug])
+
+  const getDepartments = async () => {
+    try {
+      const departmentsData = await api.get(`department/slug?slug=${departmentSlug}`);
+      console.log('====================================');
+      console.log(departmentsData?.data);
+      setDepartment(departmentsData?.data?.data);
+      console.log('====================================');
+    } catch (error) {
+      console.error(error.response);
+    }
   }
 
-  if (!departmentDoctors) {
-    return <div>Department not found!</div>;
-  }
+  // if (!department) {
+  //   return <div>Department not found!</div>;
+  // }
 
   return (
     <div className="department-container">
       {/* Department Heading */}
       <div className="hero-section">
         <div className="hero-text">
-          <h1>{departmentName && (departmentName === 'ent' ? departmentName?.toUpperCase() : departmentName?.charAt(0).toUpperCase() + departmentName.slice(1))}</h1>
-          <p>Your health is our priority. Explore our specialized department.</p>
+          <h1>{departmentSlug && (departmentSlug === 'ent' ? departmentSlug?.toUpperCase() : departmentSlug?.charAt(0).toUpperCase() + departmentSlug.slice(1))}</h1>
+          <p>{department?.description}</p>
         </div>
       </div>
 
       {/* Doctor Cards */}
-      <div className="department-doctor-list">
+      {/* <div className="department-doctor-list">
         {departmentDoctors.map((doctor: any, index: number) => (
           // <NavLink className="link" to={`doctor/${doctor.id}`} end>
-          <NavLink className="link" to={`/doctor/${doctor.id}`} end>
+          <NavLink className="link" to={`/doctor/${doctor.id}`} key={index} end>
             <div key={index} className="department-doctor-card">
               <div className="department-doctor-card-image">
                 <img src={doctor.image} alt={doctor.name} />
@@ -107,7 +127,7 @@ const Department = () => {
             </div>
           </NavLink>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
