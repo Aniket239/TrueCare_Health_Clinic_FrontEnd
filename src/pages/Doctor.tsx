@@ -62,7 +62,7 @@ const Doctor = () => {
                 </div>
                 <div className="doctor-info">
                     <h1>{doctor?.name}</h1>
-                    <p className="department">Department of Cardiology</p>
+                    <p className="department">Department of {doctor?.department?.name}</p>
                 </div>
             </header>
 

@@ -54,6 +54,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverts white to black */
+  cursor: pointer;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

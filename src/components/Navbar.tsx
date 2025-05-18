@@ -9,14 +9,14 @@ import { setJwtToken } from '../helpers/setJwtToken';
 export const Navbar = () => {
     const loggedIn = useSelector((state: any) => state.auth.loggedIn);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [departments, setDepartments] = useState<any>(null); 
+    const [departments, setDepartments] = useState<any>(null);
     const dispatch = useDispatch();
     useEffect(() => {
         getDepartments();
         getUser();
     }, [])
 
-    const getDepartments = async () =>{
+    const getDepartments = async () => {
         try {
             const departmentsData = await api.get('departments');
             console.log('====================================');
@@ -66,27 +66,29 @@ export const Navbar = () => {
                                 Departments <i className="fa-solid fa-chevron-down"></i>
                             </NavLink>
                             <ul className="dropdown-menu">
-                                {departments && departments.map((department:any)=>{
-                                    return(
+                                {departments && departments.map((department: any) => {
+                                    return (
                                         <li><NavLink to={`/department/${department?.slug}`}>{department?.name}</NavLink></li>
                                     )
                                 })}
                             </ul>
                         </li>
-                        <li><NavLink to="/" end>Doctors</NavLink></li>
-                        <li><NavLink to="/" end>About</NavLink></li>
+                        <li><NavLink to="/doctors" end>Doctors</NavLink></li>
+                        {loggedIn &&
+                            <li><NavLink to="/appointments" end>Appointments</NavLink></li>
+                        }
                     </ul>
                 </div>
 
                 <div className="nav-right">
                     {loggedIn ? (
-                        <NavLink to="/account" end>
+                        <NavLink to="/account" className='account-link' end>
+                            Account
                             <img className="account-icon" src="src/assets/account.png" alt="Account" />
                         </NavLink>
                     ) : (
-                        <NavLink to="/login" className="login-link">Login</NavLink>
+                        <NavLink to="/login" className="appointment-btn">Login / Sign up</NavLink>
                     )}
-                    <button className="appointment-btn">Make an Appointment</button>
                 </div>
 
                 <div className="menu-toggle" onClick={toggleMenu}>

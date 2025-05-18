@@ -106,18 +106,22 @@
     border-radius: 50%;
 }
 
-.login-link {
-    font-weight: 500;
+.account-link {
+    font-weight: 700;
     text-decoration: none;
     color: #333;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.login-link:hover {
+.account-link:hover {
     color: #007bff;
 }
 
 .appointment-btn {
+    text-decoration: none;
     background-color: #007bff;
     color: white;
     border: none;
@@ -130,6 +134,7 @@
 
 .appointment-btn:hover {
     background-color: #0056b3;
+    color: white;
 }
 
 /* === Hamburger Icon === */
